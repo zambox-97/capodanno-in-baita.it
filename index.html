@@ -10,27 +10,99 @@
       margin-top: 80px; 
       background: #f9f9f9;
     }
-    h1 { font-size: 36px; margin-bottom: 20px; }
-    .counter { font-size: 120px; font-weight: bold; color: darkgreen; }
+
+    h1 { 
+      font-size: 36px; 
+      margin-bottom: 20px; 
+      color: darkgreen;
+    }
+
+    .counter { 
+      font-size: 120px; 
+      font-weight: bold; 
+      color: darkgreen; 
+    }
+
     .gif img { margin-top: 20px; }
-    .partecipanti {
+
+    /* Stile del nome del partecipante */
+    .partecipante {
       margin-top: 40px;
-      font-size: 22px;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      background-color: rgba(0, 100, 0, 0.7); /* stesso colore del titolo ma più trasparente */
       display: inline-block;
-      text-align: left;
-      animation: fadeIn 1s ease-in-out;
+      padding: 15px 30px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 100, 0, 0.5);
+      transform: scale(0);
+      animation: popIn 0.7s ease-out forwards;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .partecipanti li {
-      list-style: none;
-      margin: 5px 0;
+
+    .partecipante:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 100, 0, 0.8);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      80% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* Scheda popup */
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
       opacity: 0;
-      transform: translateX(-20px);
-      animation: slideIn 0.8s forwards;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .partecipanti li:nth-child(odd) { animation-delay: 0.2s; }
-    .partecipanti li:nth-child(even) { animation-delay: 0.4s; }
-    @keyframes slideIn {
-      to { opacity: 1; transform: translateX(0); }
+
+    .popup.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      animation: zoomIn 0.4s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-content img {
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+
+    .close-btn {
+      background: darkgreen;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .close-btn:hover {
+      background: #0a8c0a;
     }
   </style>
 </head>
@@ -39,17 +111,53 @@
   <div class="counter">38 su 45</div>
   
   <div class="gif">
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTlpMTFjNGt1a2c2MG54dWZ6ZjBlM2kwbGltOXN2ZDYxYjNzN2QwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2IYN87QjIg51kc/giphy.gif" alt="gif animata" width="100">
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTlpMTFjNGt1a2c2MG54dWZ6ZjBlM2kwbGltOXN2ZDYxYjNzN2QwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2IYN87QjIg51kc/giphy.gif" 
+         alt="gif animata" width="100">
   </div>
 
-  <ul class="partecipanti">
-    <li>Mox</li>
-    <li>Zambox</li>
-    <li>Tex</li>
-    <li>Mike</li>
-    <li>Panfi</li>
-    <li>Uggio</li>
-    <li>Cami</li>
-  </ul>
+  <div class="partecipante" id="partecipante-display"></div>
+
+  <!-- Popup nascosto -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2 id="popup-nome"></h2>
+      <img id="popup-gif" src="" width="200" alt="gif partecipante">
+      <br>
+      <button class="close-btn" onclick="chiudiPopup()">Chiudi</button>
+    </div>
+  </div>
+
+  <script>
+    // Lista partecipanti con gif personalizzate
+    const partecipanti = [
+      { nome: "Mox", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
+      { nome: "Zambox", gif: "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" },
+      { nome: "Tex", gif: "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" },
+      { nome: "Mike", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
+      { nome: "Panfi", gif: "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" },
+      { nome: "Luca", gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" },
+      { nome: "Cami", gif: "https://media.giphy.com/media/l0MYGB3U09YwYvQyU/giphy.gif" }
+    ];
+
+    function mostraPartecipanteCasuale() {
+      const idx = Math.floor(Math.random() * partecipanti.length);
+      const scelto = partecipanti[idx];
+      const el = document.getElementById("partecipante-display");
+      el.textContent = "🎉 " + scelto.nome + " 🎉";
+      el.onclick = () => apriPopup(scelto);
+    }
+
+    function apriPopup(partecipante) {
+      document.getElementById("popup").classList.add("show");
+      document.getElementById("popup-nome").textContent = partecipante.nome;
+      document.getElementById("popup-gif").src = partecipante.gif;
+    }
+
+    function chiudiPopup() {
+      document.getElementById("popup").classList.remove("show");
+    }
+
+    window.addEventListener("DOMContentLoaded", mostraPartecipanteCasuale);
+  </script>
 </body>
 </html>
