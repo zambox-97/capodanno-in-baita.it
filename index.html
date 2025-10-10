@@ -25,13 +25,13 @@
 
     .gif img { margin-top: 20px; }
 
-    /* Stile del nome del partecipante */
+    /* Nome partecipante */
     .partecipante {
       margin-top: 40px;
       font-size: 32px;
       font-weight: bold;
       color: white;
-      background-color: rgba(0, 100, 0, 0.7); /* stesso colore del titolo ma più trasparente */
+      background-color: rgba(0, 100, 0, 0.7);
       display: inline-block;
       padding: 15px 30px;
       border-radius: 20px;
@@ -53,7 +53,28 @@
       100% { transform: scale(1); }
     }
 
-    /* Scheda popup */
+    /* Animazione di uscita del nome */
+    @keyframes fadeOutDown {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(30px); }
+    }
+
+    /* Stile testo finale */
+    .messaggio-finale {
+      font-size: 32px;
+      color: darkgreen;
+      font-weight: bold;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Popup */
     .popup {
       position: fixed;
       top: 0; left: 0;
@@ -75,12 +96,11 @@
     .popup-content {
       background: #fff;
       border-radius: 20px;
-      padding: 30px;
+      padding: 40px;
       text-align: center;
       box-shadow: 0 0 20px rgba(0,0,0,0.3);
       animation: zoomIn 0.4s ease;
       width: 400px;
-      height: auto;
       max-width: 90%;
     }
 
@@ -133,7 +153,7 @@
   </div>
 
   <script>
-    // Lista partecipanti con gif personalizzate
+    // Partecipanti con gif
     const partecipanti = [
       { nome: "Mox 😍", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
       { nome: "Zambox 🤤", gif: "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" },
@@ -159,7 +179,18 @@
     }
 
     function chiudiPopup() {
-      document.getElementById("popup").classList.remove("show");
+      const popup = document.getElementById("popup");
+      popup.classList.remove("show");
+
+      const nomeEl = document.getElementById("partecipante-display");
+      nomeEl.style.animation = "fadeOutDown 0.6s forwards";
+
+      // Dopo l'animazione, mostra "e tu ci sarai?"
+      setTimeout(() => {
+        nomeEl.style = ""; // reset stili precedenti
+        nomeEl.className = "messaggio-finale";
+        nomeEl.textContent = "e tu ci sarai?";
+      }, 600);
     }
 
     window.addEventListener("DOMContentLoaded", mostraPartecipanteCasuale);
