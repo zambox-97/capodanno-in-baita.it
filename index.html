@@ -53,13 +53,13 @@
       100% { transform: scale(1); }
     }
 
-    /* Animazione di uscita del nome */
+    /* Animazione uscita */
     @keyframes fadeOutDown {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(30px); }
     }
 
-    /* Stile testo finale */
+    /* Messaggio finale */
     .messaggio-finale {
       font-size: 32px;
       color: darkgreen;
@@ -67,11 +67,12 @@
       margin-top: 40px;
       opacity: 0;
       animation: fadeIn 1s ease forwards;
+      cursor: pointer; /* così è chiaro che si può cliccare */
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Popup */
@@ -168,6 +169,7 @@
       const idx = Math.floor(Math.random() * partecipanti.length);
       const scelto = partecipanti[idx];
       const el = document.getElementById("partecipante-display");
+      el.className = "partecipante"; // reset eventuali classi precedenti
       el.textContent = "C'è anche " + scelto.nome + " !";
       el.onclick = () => apriPopup(scelto);
     }
@@ -187,9 +189,11 @@
 
       // Dopo l'animazione, mostra "e tu ci sarai?"
       setTimeout(() => {
-        nomeEl.style = ""; // reset stili precedenti
+        nomeEl.style = "";
         nomeEl.className = "messaggio-finale";
         nomeEl.textContent = "e tu ci sarai?";
+        // Se l'utente clicca di nuovo, mostra un altro nome casuale
+        nomeEl.onclick = mostraPartecipanteCasuale;
       }, 600);
     }
 
