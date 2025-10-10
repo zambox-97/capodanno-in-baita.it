@@ -7,19 +7,48 @@
     body { 
       font-family: Arial, sans-serif; 
       text-align: center; 
-      margin-top: 100px; 
+      margin-top: 80px; 
       background: #f9f9f9;
     }
-    h1 { font-size: 36px; margin-bottom: 30px; }
-    .counter { font-size: 150px; font-weight: bold; color: darkgreen; }
+    h1 { font-size: 36px; margin-bottom: 20px; }
+    .counter { font-size: 120px; font-weight: bold; color: darkgreen; }
+    .gif img { margin-top: 20px; }
+    .partecipanti {
+      margin-top: 40px;
+      font-size: 22px;
+      display: inline-block;
+      text-align: left;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .partecipanti li {
+      list-style: none;
+      margin: 5px 0;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.8s forwards;
+    }
+    .partecipanti li:nth-child(odd) { animation-delay: 0.2s; }
+    .partecipanti li:nth-child(even) { animation-delay: 0.4s; }
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
   </style>
 </head>
 <body>
   <h1>POSTI RIMASTI IN BAITA</h1>
-  <div class="counter">38 su 45</div> <!-- 🔴 qui cambi il numero -->
-    <!-- 🎞️ Qui la tua GIF -->
+  <div class="counter">38 su 45</div>
+  
   <div class="gif">
     <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTlpMTFjNGt1a2c2MG54dWZ6ZjBlM2kwbGltOXN2ZDYxYjNzN2QwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2IYN87QjIg51kc/giphy.gif" alt="gif animata" width="100">
   </div>
+
+  <ul class="partecipanti">
+    <li>🏔️ Anna</li>
+    <li>🔥 Luca</li>
+    <li>🦌 Marta</li>
+    <li>🍷 Giovanni</li>
+    <li>❄️ Chiara</li>
+    <li>🧤 Stefano</li>
+  </ul>
 </body>
 </html>
