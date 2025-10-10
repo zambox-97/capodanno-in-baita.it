@@ -108,7 +108,7 @@
 </head>
 <body>
   <h1>POSTI RIMASTI IN BAITA</h1>
-  <div class="counter">38 su 45</div>
+  <div class="counter">37 su 45</div>
   
   <div class="gif">
     <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTlpMTFjNGt1a2c2MG54dWZ6ZjBlM2kwbGltOXN2ZDYxYjNzN2QwbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l3q2IYN87QjIg51kc/giphy.gif" 
@@ -130,20 +130,20 @@
   <script>
     // Lista partecipanti con gif personalizzate
     const partecipanti = [
-      { nome: "Mox", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
-      { nome: "Zambox", gif: "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" },
-      { nome: "Tex", gif: "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" },
-      { nome: "Mike", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
-      { nome: "Panfi", gif: "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" },
-      { nome: "Luca", gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" },
-      { nome: "Cami", gif: "https://media.giphy.com/media/l0MYGB3U09YwYvQyU/giphy.gif" }
+      { nome: "Mox 😍", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
+      { nome: "Zambox 🤤", gif: "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif" },
+      { nome: "Tex 😱", gif: "https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" },
+      { nome: "Mike ❤️", gif: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" },
+      { nome: "Panfi 🎉", gif: "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif" },
+      { nome: "Luca 😭", gif: "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" },
+      { nome: "Cami 🤩", gif: "https://media.giphy.com/media/l0MYGB3U09YwYvQyU/giphy.gif" }
     ];
 
     function mostraPartecipanteCasuale() {
       const idx = Math.floor(Math.random() * partecipanti.length);
       const scelto = partecipanti[idx];
       const el = document.getElementById("partecipante-display");
-      el.textContent = "🎉 " + scelto.nome + " 🎉";
+      el.textContent = "C'è anche " + scelto.nome + " !";
       el.onclick = () => apriPopup(scelto);
     }
 
